@@ -1,0 +1,29 @@
+# Demo dossier outline — paste this into the Submission Readiness tab
+# Covers ~40% of required ICH M4 sections to produce a meaningful gap report
+# and demonstrate the AI gap analysis feature.
+#
+# Copy everything below the dashed line and paste into the text area:
+# -----------------------------------------------------------------------
+
+1.0 Cover letter
+1.2 Application form
+1.3 Prescribing information and labeling
+
+2.3 Quality Overall Summary
+2.5 Clinical Overview
+2.7 Clinical Summary
+
+3.2.S.1 Drug Substance nomenclature and structure
+3.2.S.2 Drug Substance manufacture
+3.2.S.4 Drug Substance control
+3.2.P.1 Drug Product description and composition
+3.2.P.3 Drug Product manufacture
+3.2.P.5 Drug Product control
+
+4.2.1.1 Primary pharmacodynamics
+4.2.2 Pharmacokinetics ADME studies
+4.2.3.1 Acute toxicity
+
+5.2 Tabular listing of all clinical studies
+5.5.2 Phase 3 controlled clinical studies
+5.5.3 Integrated safety summary

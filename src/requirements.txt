@@ -1,0 +1,38 @@
+# =============================================================================
+# Requirements — Drug Safety Signal Detector & Submission Readiness Checker
+# =============================================================================
+# Install with (venv must be active, run from repo root):
+#   pip install -r src/requirements.txt
+
+# --- Web framework (backend API) ------------------------------------------
+fastapi>=0.111.0
+uvicorn[standard]>=0.30.0
+
+# --- Frontend UI --------------------------------------------------------------
+streamlit>=1.35.0
+
+# --- HTTP client (openFDA API calls) -----------------------------------------
+httpx>=0.27.0
+
+# --- Data processing (PRR computation) ---------------------------------------
+pandas>=1.5.0
+
+# --- IBM watsonx.ai SDK -------------------------------------------------------
+ibm-watsonx-ai>=1.7.2
+
+# --- YAML support (CTD checklist) --------------------------------------------
+PyYAML>=6.0.0
+
+# --- Fuzzy string matching (CTD section diff) --------------------------------
+thefuzz>=0.22.0
+python-Levenshtein>=0.25.0
+
+# --- Env var loading ----------------------------------------------------------
+python-dotenv>=1.0.0
+
+# --- Data validation (Pydantic, used by FastAPI) ------------------------------
+pydantic>=2.0.0
+
+# --- Testing ------------------------------------------------------------------
+pytest>=8.0.0
+pytest-asyncio>=0.23.0

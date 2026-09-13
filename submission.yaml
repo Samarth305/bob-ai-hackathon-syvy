@@ -9,51 +9,64 @@
 # =============================================================================
 
 team:
-  name: ""                             # REQUIRED — e.g., "Orion Squad"
-  track: ""                            # REQUIRED — one of: AI | DevOps | Sustainability | Open
+  name: "Team Syvy"                      # REQUIRED — e.g., "Orion Squad"
+  track: "AI"                            # REQUIRED — one of: AI | DevOps | Sustainability | Open
   lead:
-    name: ""                           # REQUIRED — e.g., "Alice Chen"
-    email: ""                          # REQUIRED — e.g., "alice.chen@ibm.com"
+    name: "Team Lead"                    # REQUIRED — e.g., "Alice Chen"
+    email: "lead@syvy.team"             # REQUIRED — e.g., "alice.chen@ibm.com"
   members:
-    - name: ""                         # REQUIRED — Team member 1
-      email: ""
-    - name: ""                         # Add more members by copying the two lines above
-      email: ""
-    - name: ""
-      email: ""
+    - name: "Member 1"                   # REQUIRED — Team member 1
+      email: "member1@syvy.team"
+    - name: "Member 2"                   # Add more members by copying the two lines above
+      email: "member2@syvy.team"
+    - name: "Member 3"
+      email: "member3@syvy.team"
 
 submission:
-  title: ""                            # REQUIRED — Project display name, e.g., "SmartOps Dashboard"
+  title: "Drug Safety Signal Detector & Submission Readiness Checker"   # REQUIRED — Project display name
 
-  problem_statement: >                 # REQUIRED — 1-3 sentences. What problem? Who has it?
-    Replace this text with a concise description of the real-world problem
-    your project addresses and who experiences it.
+  problem_statement: >                   # REQUIRED — 1-3 sentences. What problem? Who has it?
+    FDA's FAERS database contains 20M+ adverse event reports — far too many for manual review,
+    leading to delayed drug-safety signal detection that has caused real patient harm (e.g., Vioxx).
+    Simultaneously, regulatory CTD dossiers span 100,000+ pages; a single missing section triggers
+    rejection, costing 6–12 months and $50–100M. Both problems share the same root cause: too much
+    complex data for human review alone.
 
-  solution_summary: >                  # REQUIRED — 1-3 sentences. What did you build?
-    Replace this text with a clear description of your solution
-    and how it addresses the problem above.
+  solution_summary: >                    # REQUIRED — 1-3 sentences. What did you build?
+    A two-mode AI platform: Signal Detection ingests live FDA FAERS data, computes Proportional
+    Reporting Ratios (PRR) to surface emerging drug-safety signals, and uses IBM watsonx.ai (Granite)
+    to generate plain-language rationale per signal. Submission Readiness validates a user-provided
+    dossier outline against the ICH M4 CTD 5-module checklist, scores completeness per module, and
+    generates a prose gap report with actionable next steps via the same LLM.
 
-  key_features:                        # REQUIRED — List 3 to 5 specific features you implemented
-    - ""                               # e.g., "Real-time pipeline anomaly detection using watsonx.ai"
-    - ""
-    - ""
-    - ""                               # optional 4th
-    - ""                               # optional 5th
+  key_features:                          # REQUIRED — List 3 to 5 specific features you implemented
+    - "Real-time FAERS adverse-event signal detection using PRR statistics (PRR ≥ 2, count ≥ 3 threshold)"
+    - "IBM watsonx.ai (Granite) LLM integration for plain-language signal rationale and gap reports"
+    - "ICH M4 CTD 5-module completeness checker with per-module scoring and overall readiness score"
+    - "Offline fallback with bundled FAERS sample cache — demo works without internet access"
+    - "FastAPI backend + Streamlit frontend with two clearly separated modes"
 
   tech_stack:
-    languages: []                      # REQUIRED — e.g., ["Python", "TypeScript"]
-    frameworks: []                     # e.g., ["FastAPI", "React"]
-    ibm_technologies: []               # e.g., ["watsonx.ai", "IBM Bob", "IBM Cloud Functions"]
-    databases: []                      # e.g., ["PostgreSQL", "Redis"]
-    other: []                          # e.g., ["Docker", "GitHub Actions", "Slack API"]
+    languages: ["Python"]
+    frameworks: ["FastAPI", "Streamlit"]
+    ibm_technologies: ["watsonx.ai", "IBM Bob", "Granite model"]
+    databases: []
+    other: ["openFDA FAERS API", "GitHub Actions", "ICH M4 CTD standard"]
 
-  what_we_are_most_proud_of: >         # Optional but recommended — guides judges to your best work
-    Replace with what aspect of the submission you consider strongest
-    and want judges to pay special attention to.
+  what_we_are_most_proud_of: >           # Optional but recommended — guides judges to your best work
+    The end-to-end integration between real FDA public data and IBM watsonx.ai reasoning: a user
+    types a drug name, live adverse-event reports are fetched, PRR statistics surface signals that
+    would otherwise take days to compute manually, and the Granite model instantly explains each
+    signal in plain language a non-statistician can act on. The same LLM pivot to regulatory
+    compliance demonstrates two genuinely different use-cases in one coherent AI platform.
 
-  known_limitations: >                 # Optional but recommended — be honest about gaps
-    Replace with any known limitations, incomplete features,
-    or shortcuts taken due to time constraints.
+  known_limitations: >                   # Optional but recommended — be honest about gaps
+    PRR thresholds (PRR ≥ 2, report count ≥ 3) are simplified pharmacovigilance heuristics and
+    have not been clinically validated — demo-grade signal flags only, not medical recommendations.
+    The CTD checklist covers section titles and presence/absence, not the depth or quality of
+    regulatory content. openFDA API is rate-limited to low volume; the bundled fallback cache is
+    a small static sample. watsonx.ai LLM summaries are generative and should be reviewed by a
+    qualified pharmacovigilance or regulatory professional before acting on them.
 
 # =============================================================================
 # ARTIFACT LOCATIONS
