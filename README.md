@@ -51,9 +51,9 @@ We built a two-mode AI-powered platform: **Signal Detection** ingests live FDA F
 
 ```
 ├── src/                        # All source code
-│   ├── api/                    # FastAPI backend (endpoints: /signals, /readiness)
-│   ├── llm/                    # watsonx.ai client wrapper (swappable)
-│   ├── data/                   # Cached FAERS fallback sample + CTD checklist
+│   ├── backend/                # FastAPI backend (main.py, prr.py, readiness.py, models.py)
+│   ├── llm/                    # watsonx.ai client wrapper (client.py, prompts.py)
+│   ├── data/                   # Cached FAERS fallback + CTD checklist + Drugs@FDA loader
 │   ├── frontend/               # Streamlit UI (two tabs: Signal Detection, Submission Readiness)
 │   ├── .env.example            # All required environment variables
 │   └── README.md
@@ -67,6 +67,7 @@ We built a two-mode AI-powered platform: **Signal Detection** ingests live FDA F
 │   ├── demo-video-link.txt
 │   └── live-demo-url.txt
 ├── presentation/               # slides.pdf
+├── run.py                      # Single-command launcher (auto-venv, starts both servers)
 └── submission.yaml
 ```
 
@@ -78,26 +79,22 @@ We built a two-mode AI-powered platform: **Signal Detection** ingests live FDA F
 
 ```bash
 # 1. Clone the repo
-git clone https://github.com/your-org/bob-ai-hackathon-syvy.git
+git clone https://github.com/syvyai/bob-ai-hackathon-syvy.git
 cd bob-ai-hackathon-syvy
 
-# 2. Create and activate a virtual environment
-python -m venv .venv
-source .venv/bin/activate  # Windows: .venv\Scripts\activate
-
-# 3. Install dependencies
-pip install -r src/requirements.txt
-
-# 4. Configure environment
+# 2. Configure environment
 cp src/.env.example src/.env
 # Edit src/.env — add WATSONX_API_KEY, WATSONX_PROJECT_ID, WATSONX_URL
 
-# 5. Start the FastAPI backend
-uvicorn src.api.main:app --reload --port 8000
-
-# 6. In a second terminal, start the Streamlit frontend
-streamlit run src/frontend/app.py
+# 3. Launch everything (auto-creates venv, installs deps, starts both servers)
+python run.py
+# Windows shortcut: run.bat
+# macOS/Linux:      ./run.sh
 ```
+
+> The launcher opens your browser automatically. Backend runs on port 8000, Streamlit on port 8501.
+> Press **Ctrl+C** once to stop both servers.
+> See [`docs/setup-guide.md`](docs/setup-guide.md) for full per-OS instructions.
 
 ---
 

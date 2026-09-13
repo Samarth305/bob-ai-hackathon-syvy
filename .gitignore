@@ -94,3 +94,8 @@ logs/
 .terraform/
 *.tfstate
 *.tfstate.backup
+
+# -- Large local datasets (too big for git) -----------------------------------
+drug-drugsfda-0001-of-0001.json
+*.json.gz
+

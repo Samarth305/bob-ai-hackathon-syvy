@@ -12,15 +12,15 @@ team:
   name: "Team Syvy"                      # REQUIRED — e.g., "Orion Squad"
   track: "AI"                            # REQUIRED — one of: AI | DevOps | Sustainability | Open
   lead:
-    name: "Team Lead"                    # REQUIRED — e.g., "Alice Chen"
-    email: "lead@syvy.team"             # REQUIRED — e.g., "alice.chen@ibm.com"
+    name: "Samarth Kachhadiya"           # REQUIRED — e.g., "Alice Chen"
+    email: "23ce050@charusat.edu.in"     # REQUIRED — e.g., "alice.chen@ibm.com"
   members:
-    - name: "Member 1"                   # REQUIRED — Team member 1
-      email: "member1@syvy.team"
-    - name: "Member 2"                   # Add more members by copying the two lines above
-      email: "member2@syvy.team"
-    - name: "Member 3"
-      email: "member3@syvy.team"
+    - name: "Vraj Mevawala"              # REQUIRED — Team member 1
+      email: "vraj@syvy.team"
+    - name: "Yug Thummar"
+      email: "yug.thummar@syvy.team"
+    - name: "Yug Moradiya"
+      email: "yug.moradiya@syvy.team"
 
 submission:
   title: "Drug Safety Signal Detector & Submission Readiness Checker"   # REQUIRED — Project display name
@@ -34,14 +34,15 @@ submission:
 
   solution_summary: >                    # REQUIRED — 1-3 sentences. What did you build?
     A two-mode AI platform: Signal Detection ingests live FDA FAERS data, computes Proportional
-    Reporting Ratios (PRR) to surface emerging drug-safety signals, and uses IBM watsonx.ai (Granite)
-    to generate plain-language rationale per signal. Submission Readiness validates a user-provided
-    dossier outline against the ICH M4 CTD 5-module checklist, scores completeness per module, and
-    generates a prose gap report with actionable next steps via the same LLM.
+    Reporting Ratios (PRR) to surface emerging drug-safety signals, and uses IBM watsonx.ai
+    (meta-llama/llama-3-3-70b-instruct) to generate plain-language rationale per signal.
+    Submission Readiness validates a user-provided dossier outline against the ICH M4 CTD
+    5-module checklist, scores completeness per module, and generates a prose gap report
+    with actionable next steps via the same LLM.
 
   key_features:                          # REQUIRED — List 3 to 5 specific features you implemented
     - "Real-time FAERS adverse-event signal detection using PRR statistics (PRR ≥ 2, count ≥ 3 threshold)"
-    - "IBM watsonx.ai (Granite) LLM integration for plain-language signal rationale and gap reports"
+    - "IBM watsonx.ai (meta-llama/llama-3-3-70b-instruct) LLM integration for plain-language signal rationale and gap reports"
     - "ICH M4 CTD 5-module completeness checker with per-module scoring and overall readiness score"
     - "Offline fallback with bundled FAERS sample cache — demo works without internet access"
     - "FastAPI backend + Streamlit frontend with two clearly separated modes"
@@ -49,9 +50,9 @@ submission:
   tech_stack:
     languages: ["Python"]
     frameworks: ["FastAPI", "Streamlit"]
-    ibm_technologies: ["watsonx.ai", "IBM Bob", "Granite model"]
+    ibm_technologies: ["watsonx.ai", "IBM Bob", "meta-llama/llama-3-3-70b-instruct via watsonx.ai"]
     databases: []
-    other: ["openFDA FAERS API", "GitHub Actions", "ICH M4 CTD standard"]
+    other: ["openFDA FAERS API", "FDA Drugs@FDA dataset", "GitHub Actions", "ICH M4 CTD standard"]
 
   what_we_are_most_proud_of: >           # Optional but recommended — guides judges to your best work
     The end-to-end integration between real FDA public data and IBM watsonx.ai reasoning: a user
