@@ -8,6 +8,8 @@ services:
     dockerfilePath: ./Dockerfile.backend
     plan: free
     healthCheckPath: /health
+    # PORT is injected by Render; Dockerfile exposes 8000 but Render overrides via $PORT
+    # Update CMD in Dockerfile.backend if you need a different port
     envVars:
       - key: WATSONX_API_KEY
         sync: false          # set manually in Render dashboard — never commit
