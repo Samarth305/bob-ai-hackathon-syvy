@@ -9,7 +9,10 @@ Formula (WHO-UMC standard):
     c = reports of adverse_event Y for all other drugs
     d = reports of other events for all other drugs
 
-Signal threshold: PRR >= 2.0 AND a >= 3
+Chi-square (Pearson):
+    χ² = N * (a*d - b*c)² / ((a+b)*(c+d)*(a+c)*(b+d))
+
+Signal threshold: PRR >= 2.0 AND a >= 3 AND χ² >= 4.0
 """
 
 import sys
@@ -86,12 +89,18 @@ def compute_prr(reports: list[dict], drug_name: str) -> list[dict]:
 
         prr = (a / (a + b)) / denom_a
 
-        if prr >= 2.0 and a >= 3:
+        # Pearson chi-square: N*(ad - bc)^2 / ((a+b)(c+d)(a+c)(b+d))
+        N = a + b + c + d
+        denom_chi = (a + b) * (c + d) * (a + c) * (b + d)
+        chi_square = (N * (a * d - b * c) ** 2 / denom_chi) if denom_chi > 0 else 0.0
+
+        if prr >= 2.0 and a >= 3 and chi_square >= 4.0:
             results.append({
                 "drug": row["drug"],
                 "adverse_event": row["event"],
                 "prr": round(float(prr), 2),
                 "report_count": int(a),
+                "chi_square": round(float(chi_square), 2),
                 "a": int(a), "b": int(b), "c": int(c), "d": int(d),
                 "rationale": "",  # filled in by LLM layer
             })
@@ -118,5 +127,5 @@ if __name__ == "__main__":
     signals = compute_prr(reports, drug)
     print(f"Drug: {drug}  |  Signals flagged (PRR>=2, count>=3): {len(signals)}\n")
     for s in signals[:5]:
-        print(f"  PRR={s['prr']:6.2f}  count={s['report_count']:4d}  event={s['adverse_event']}")
+        print(f"  PRR={s['prr']:6.2f}  χ²={s['chi_square']:7.2f}  count={s['report_count']:4d}  event={s['adverse_event']}")
     print("\n✅ PRR calculator OK")

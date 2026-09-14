@@ -86,11 +86,11 @@ with tab1:
             col_a, col_b, col_c = st.columns(3)
             col_a.metric("Reports fetched", total)
             col_b.metric("Signals flagged", len(signals))
-            col_c.metric("Threshold", "PRR ≥ 2.0 · count ≥ 3")
+            col_c.metric("Threshold", "PRR ≥ 2.0 · n ≥ 3 · χ² ≥ 4.0")
 
             if not signals:
                 st.warning(
-                    f"No signals meeting threshold (PRR ≥ 2.0, count ≥ 3) found for **{drug_name}**. "
+                    f"No signals meeting threshold (PRR ≥ 2.0, n ≥ 3, χ² ≥ 4.0) found for **{drug_name}**. "
                     "Try a more common drug name or increase the report limit."
                 )
             else:
@@ -99,15 +99,17 @@ with tab1:
 
                 for i, sig in enumerate(signals):
                     prr = sig["prr"]
+                    chi2 = sig.get("chi_square", 0.0)
                     colour = "🔴" if prr >= 5 else "🟡" if prr >= 3 else "🟢"
                     with st.expander(
-                        f"{colour} **{sig['adverse_event']}** — PRR: {prr:.2f} | Reports: {sig['report_count']}",
+                        f"{colour} **{sig['adverse_event']}** — PRR: {prr:.2f} | χ²: {chi2:.2f} | Reports: {sig['report_count']}",
                         expanded=(i < 3),
                     ):
-                        col_x, col_y, col_z = st.columns(3)
+                        col_x, col_y, col_z, col_w = st.columns(4)
                         col_x.metric("PRR", f"{prr:.2f}")
-                        col_y.metric("Report count", sig["report_count"])
-                        col_z.metric("Drug", sig["drug"])
+                        col_y.metric("χ² (chi-sq)", f"{chi2:.2f}")
+                        col_z.metric("Report count", sig["report_count"])
+                        col_w.metric("Drug", sig["drug"])
 
                         rationale = sig.get("rationale", "")
                         if rationale and not rationale.startswith("["):

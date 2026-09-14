@@ -19,6 +19,7 @@ class SignalItem(BaseModel):
     adverse_event: str
     prr: float
     report_count: int
+    chi_square: float = 0.0
     rationale: str = ""
 
 

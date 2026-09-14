@@ -1,0 +1,37 @@
+services:
+  # ─────────────────────────────────────────────────────────────────────────
+  # Service 1 — FastAPI backend
+  # ─────────────────────────────────────────────────────────────────────────
+  - type: web
+    name: drug-safety-backend
+    runtime: docker
+    dockerfilePath: ./Dockerfile.backend
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: WATSONX_API_KEY
+        sync: false          # set manually in Render dashboard — never commit
+      - key: WATSONX_PROJECT_ID
+        sync: false
+      - key: WATSONX_URL
+        value: https://us-south.ml.cloud.ibm.com
+      - key: WATSONX_MODEL_ID
+        value: meta-llama/llama-3-3-70b-instruct
+      # After deploy, paste the frontend's Render URL here:
+      # e.g. https://drug-safety-frontend.onrender.com
+      - key: CORS_ORIGINS
+        sync: false
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # Service 2 — Streamlit frontend
+  # ─────────────────────────────────────────────────────────────────────────
+  - type: web
+    name: drug-safety-frontend
+    runtime: docker
+    dockerfilePath: ./Dockerfile.frontend
+    plan: free
+    envVars:
+      # After deploy, paste the backend's Render URL here:
+      # e.g. https://drug-safety-backend.onrender.com
+      - key: BACKEND_URL
+        sync: false
