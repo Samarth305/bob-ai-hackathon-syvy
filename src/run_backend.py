@@ -1,25 +1,18 @@
 """
 run_backend.py — Production entrypoint for Render / any platform.
 
-Resolves the src/ package root regardless of working directory or
-how Render nests the repo, then starts uvicorn programmatically.
+Must be run from inside the src/ directory:
+    cd src && python run_backend.py
+
+Adds the current working directory (src/) to sys.path so that
+backend, data, and llm packages are importable as top-level modules.
 """
 import os
 import sys
-from pathlib import Path
 
-# __file__ is always reliable for locating the script itself.
-# This file lives at <repo_root>/src/run_backend.py, so its parent IS src/.
-THIS_FILE = Path(__file__).resolve()
-SRC_DIR = THIS_FILE.parent  # the directory that contains backend/, data/, llm/
-
-# Insert src/ at the front of sys.path so all sibling packages resolve
-for p in [str(SRC_DIR)]:
-    if p not in sys.path:
-        sys.path.insert(0, p)
-
-# Also change cwd to src/ so relative file loads (e.g. sample_faers.json) work
-os.chdir(SRC_DIR)
+# Add cwd (src/) to path — works regardless of how Render resolves __file__
+if os.getcwd() not in sys.path:
+    sys.path.insert(0, os.getcwd())
 
 import uvicorn
 
