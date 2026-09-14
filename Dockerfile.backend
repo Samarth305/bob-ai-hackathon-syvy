@@ -6,11 +6,14 @@ WORKDIR /app
 COPY src/requirements.txt ./requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy source
+# Copy source — backend/, data/, llm/, frontend/ all land directly in /app
 COPY src/ ./
 
-# Expose port (Render overrides this with $PORT env var at runtime)
+# Ensure /app is on PYTHONPATH so data/, llm/ resolve as top-level packages
+ENV PYTHONPATH=/app
+
+# Expose port (Render overrides with $PORT env var at runtime)
 EXPOSE 8000
 
-# Run FastAPI via uvicorn — use shell form so $PORT env var is expanded
+# Run FastAPI via uvicorn — shell form expands $PORT
 CMD uvicorn backend.main:app --host 0.0.0.0 --port ${PORT:-8000}
