@@ -10,15 +10,15 @@ Endpoints:
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
-from .models import (
+from backend.models import (
     HealthResponse,
     ReadinessRequest,
     ReadinessResponse,
     SignalsRequest,
     SignalsResponse,
 )
-from .prr import compute_prr
-from .readiness import check_readiness
+from backend.prr import compute_prr
+from backend.readiness import check_readiness
 from data.openfda_client import fetch_faers_reports
 from llm.client import generate
 from llm.prompts import build_gap_report_prompt, build_signal_rationale_prompt
