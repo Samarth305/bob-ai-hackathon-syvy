@@ -1,24 +1,23 @@
 """
-run_backend.py — Production entrypoint for Render / any platform.
+run_backend.py — Production entrypoint for Render.
 
-Resolves the src/ package root regardless of working directory or
-how Render nests the repo, then starts uvicorn programmatically.
+Sets PYTHONPATH and app_dir so uvicorn worker processes can also
+resolve backend/, data/, llm/ as top-level packages.
 """
 import os
 import sys
 from pathlib import Path
 
-# __file__ is always reliable for locating the script itself.
-# This file lives at <repo_root>/src/run_backend.py, so its parent IS src/.
-THIS_FILE = Path(__file__).resolve()
-SRC_DIR = THIS_FILE.parent  # the directory that contains backend/, data/, llm/
+# The directory that contains backend/, data/, llm/
+SRC_DIR = str(Path(__file__).resolve().parent)
 
-# Insert src/ at the front of sys.path so all sibling packages resolve
-for p in [str(SRC_DIR)]:
-    if p not in sys.path:
-        sys.path.insert(0, p)
+# Set PYTHONPATH so subprocess workers inherit the correct path
+os.environ["PYTHONPATH"] = SRC_DIR
 
-# Also change cwd to src/ so relative file loads (e.g. sample_faers.json) work
+# Also add to current process sys.path
+if SRC_DIR not in sys.path:
+    sys.path.insert(0, SRC_DIR)
+
 os.chdir(SRC_DIR)
 
 import uvicorn
@@ -29,5 +28,6 @@ if __name__ == "__main__":
         "backend.main:app",
         host="0.0.0.0",
         port=port,
-        workers=int(os.environ.get("WEB_CONCURRENCY", 1)),
+        app_dir=SRC_DIR,
+        workers=1,
     )
