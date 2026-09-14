@@ -7,14 +7,8 @@ Endpoints:
     POST /readiness — CTD submission readiness check (ICH M4 diff + gap report)
 """
 
-import sys
-from pathlib import Path
-
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-
-# Ensure sibling packages are importable when running via uvicorn from src/
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from backend.models import (
     HealthResponse,

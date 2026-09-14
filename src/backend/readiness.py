@@ -5,13 +5,8 @@ Diffs a user-provided dossier outline against the ICH M4 CTD checklist,
 computes per-module and overall completeness scores.
 """
 
-import sys
-from pathlib import Path
-
 from thefuzz import fuzz
 
-# Add parent to path so data module is importable when running standalone
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from data.ctd_checklist import CTD_CHECKLIST
 
 FUZZY_THRESHOLD = 72  # minimum token_sort_ratio to count as a match
