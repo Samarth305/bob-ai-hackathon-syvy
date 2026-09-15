@@ -50,7 +50,7 @@ class TestSignalsRequest:
 
     def test_limit_above_maximum_rejected(self):
         with pytest.raises(ValidationError):
-            SignalsRequest(drug_name="aspirin", limit=1001)
+            SignalsRequest(drug_name="aspirin", limit=1_000_001)
 
     def test_limit_boundary_10_accepted(self):
         req = SignalsRequest(drug_name="aspirin", limit=10)
@@ -59,6 +59,10 @@ class TestSignalsRequest:
     def test_limit_boundary_1000_accepted(self):
         req = SignalsRequest(drug_name="aspirin", limit=1000)
         assert req.limit == 1000
+
+    def test_limit_boundary_1_000_000_accepted(self):
+        req = SignalsRequest(drug_name="aspirin", limit=1_000_000)
+        assert req.limit == 1_000_000
 
     def test_missing_drug_name_rejected(self):
         with pytest.raises(ValidationError):

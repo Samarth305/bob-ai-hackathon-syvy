@@ -11,7 +11,7 @@ from pydantic import BaseModel, Field
 
 class SignalsRequest(BaseModel):
     drug_name: str = Field(..., min_length=1, description="Drug name to search in FAERS")
-    limit: int = Field(1000, ge=10, le=1000, description="Max reports to fetch from openFDA")
+    limit: int = Field(1000, ge=10, le=1_000_000, description="Max reports to fetch from openFDA (paginated)")
 
 
 class SignalItem(BaseModel):

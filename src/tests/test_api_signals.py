@@ -157,10 +157,12 @@ class TestSignalsRationalePerSignal:
     def test_rationale_field_is_per_signal_not_shared(self, api_client):
         """
         Each signal dict must hold its own rationale string object.
-        We patch generate() to return a numbered list so _parse_numbered_list
-        assigns a different line to each signal.
+        We patch generate() to return a numbered list large enough for all
+        signals (endpoint caps at 10) so _parse_numbered_list assigns a
+        different line to each signal.
         """
-        fake_rationale = "1. First signal rationale.\n2. Second signal rationale.\n3. Third signal rationale."
+        # Build 10 distinct numbered lines — enough to cover the cap of 10 signals
+        fake_rationale = "\n".join(f"{i}. Rationale number {i}." for i in range(1, 11))
         with patch("backend.main.generate", return_value=fake_rationale):
             data = _post_signals(api_client, "ASPIRIN")
 
@@ -211,7 +213,7 @@ class TestSignalsEndpointInputValidation:
         assert resp.status_code == 422
 
     def test_limit_above_maximum_returns_422(self, api_client):
-        resp = api_client.post("/signals", json={"drug_name": "ASPIRIN", "limit": 9999})
+        resp = api_client.post("/signals", json={"drug_name": "ASPIRIN", "limit": 1_000_001})
         assert resp.status_code == 422
 
     def test_missing_body_returns_422(self, api_client):

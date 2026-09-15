@@ -50,7 +50,7 @@ with tab1:
             key="drug_input",
         )
     with col2:
-        limit = st.number_input("Max reports", min_value=10, max_value=1000, value=1000, step=100)
+        limit = st.number_input("Max reports", min_value=10, max_value=1_000_000, value=1000, step=1000)
 
     run_btn = st.button("🔍 Run Signal Analysis", type="primary", key="run_signals")
 
