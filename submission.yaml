@@ -16,11 +16,11 @@ team:
     email: "23ce050@charusat.edu.in"     # REQUIRED — e.g., "alice.chen@ibm.com"
   members:
     - name: "Vraj Mevawala"              # REQUIRED — Team member 1
-      email: "vraj@syvy.team"
+      email: "23ce070@charusat.edu.in"
     - name: "Yug Thummar"
-      email: "yug.thummar@syvy.team"
+      email: "23aiml071@charusat.edu.in"
     - name: "Yug Moradiya"
-      email: "yug.moradiya@syvy.team"
+      email: "23ce073@charusat.edu.in"
 
 submission:
   title: "Drug Safety Signal Detector & Submission Readiness Checker"   # REQUIRED — Project display name
